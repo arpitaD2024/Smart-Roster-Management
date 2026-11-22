@@ -1,0 +1,5 @@
+name,email,employee_id,title,pod,max_days,max_work_days,min_offs
+Asha,asha@example.com,EMP-001,Associate,Pod A,6,6,1
+Rohan,rohan@example.com,EMP-002,Associate,Pod A,6,6,1
+Meera,meera@example.com,EMP-003,Associate,Pod B,6,6,1
+Kabir,kabir@example.com,EMP-004,Associate,Pod B,6,6,1
