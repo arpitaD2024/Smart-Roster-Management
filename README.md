@@ -105,26 +105,15 @@ The manager can configure the workforce, generate a draft roster, inspect valida
 
 ## 3. Technology Stack
 
-| Technology | Purpose |
-|---|---|
-| Python 3.12 | Primary programming language |
-| Streamlit | Browser-based management interface |
-| FastAPI | Backend REST API |
-| Pydantic | Request validation and data schemas |
-| SQLAlchemy | ORM and database access |
-| Alembic | Database schema migrations |
-| PostgreSQL | Relational database |
-| Supabase | Hosted PostgreSQL database |
-| Google OR-Tools CP-SAT | Constraint-based roster optimization |
-| Pandas | Data processing and tabular operations |
-| openpyxl | Excel import and export |
-| Requests | Frontend-to-backend HTTP communication |
-| python-dotenv | Environment variable management |
-| Uvicorn | FastAPI application server |
-| pytest | Automated testing |
-| Render | Backend hosting |
-| Streamlit Community Cloud | Frontend hosting |
-| Git and GitHub | Version control and source code management |
+| Layer | Technology | Purpose |
+|---|---|---|
+| Frontend | Streamlit, Python | User interface and roster management |
+| Backend | FastAPI | REST API and business logic |
+| Scheduling | Google OR-Tools CP-SAT | Constraint-based roster generation |
+| ORM | SQLAlchemy | Database interaction |
+| Database | Supabase PostgreSQL | Persistent application storage |
+| Backend Hosting | Render | API deployment |
+| Frontend Hosting | Streamlit Community Cloud | Application deployment |
 
 ### Why OR-Tools CP-SAT?
 
@@ -146,55 +135,47 @@ The application follows a three-layer architecture.
 2. **Application layer:** FastAPI handles requests, business logic, validation, imports, exports, and roster operations.
 3. **Data and optimization layer:** Supabase PostgreSQL stores application data, while OR-Tools CP-SAT generates optimized roster assignments.
 
-### Architecture Diagram
+## System Architecture
+
+The application uses a three-layer architecture consisting of a Streamlit frontend, FastAPI backend, and Supabase PostgreSQL database. The OR-Tools CP-SAT solver handles roster generation and scheduling constraints.
 
 ```mermaid
-flowchart TB
-    Manager["Operations Manager"]
+flowchart LR
+    U([User / Evaluator])
 
-    subgraph Frontend["Presentation Layer"]
-        UI["Streamlit Application"]
-        Pages["Overview | Employees | Setup | Availability"]
-        RosterUI["Generate Roster | Review | Imports | Exports"]
+    subgraph FE["Frontend — Streamlit Community Cloud"]
+        A["Streamlit Application"]
+        B["Roster Dashboard<br/>Employee & Allocation Views<br/>Calendar & Validation"]
+        A --> B
     end
 
-    subgraph Backend["Application Layer - Render"]
-        API["FastAPI REST API"]
-        Schemas["Pydantic Validation"]
-        Services["Business Logic and Services"]
-        Validator["Roster Validator"]
-        Scheduler["OR-Tools CP-SAT Scheduler"]
-        Backup["Backup Suggestion Engine"]
+    subgraph BE["Backend — Render"]
+        C["FastAPI REST API"]
+        D["Request Validation<br/>Business Logic"]
+        E["OR-Tools CP-SAT<br/>Roster Scheduler"]
+        F["SQLAlchemy ORM"]
+        C --> D
+        D --> E
+        D --> F
+        E --> F
     end
 
-    subgraph Data["Data Layer"]
-        ORM["SQLAlchemy ORM"]
-        DB[("Supabase PostgreSQL")]
-        Migrations["Alembic Migrations"]
+    subgraph DB["Database — Supabase"]
+        G[("PostgreSQL")]
+        H["Employees & Allocations"]
+        I["Brands, Processes<br/>& Coverage Rules"]
+        J["Rosters & Roster Entries"]
+        K["Holidays & Time Off"]
+        G --- H
+        G --- I
+        G --- J
+        G --- K
     end
 
-    Manager --> UI
-    UI --> Pages
-    UI --> RosterUI
-    Pages -->|"HTTP / JSON"| API
-    RosterUI -->|"HTTP / JSON"| API
-
-    API --> Schemas
-    Schemas --> Services
-    Services --> ORM
-    ORM <--> DB
-    Migrations --> DB
-
-    Services --> Scheduler
-    Services --> Validator
-    Services --> Backup
-
-    Scheduler --> Services
-    Validator --> Services
-    Backup --> Validator
-    Services --> API
-    API --> UI
-```
+    U --> A
+    B <-->|"HTTP / JSON"| C
+    F <-->|"SQL"| G
+``` 
 
 ### Deployment Architecture
 
