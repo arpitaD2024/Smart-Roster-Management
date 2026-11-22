@@ -831,41 +831,7 @@ Run the tests from the project root:
 
 Tests use an isolated database configuration and should not be treated as a substitute for testing the live Supabase deployment.
 
----
-
-## 17. Assessment Requirement Mapping
-
-| Requirement | Implementation |
-|---|---|
-| Employee management | Create, edit, deactivate, reactivate, and import |
-| 30+ employee scenario | 30 active employee records configured |
-| Multiple brands | Three configured brands |
-| Multiple processes | Three configured processes |
-| Employee allocations | Primary and backup allocations |
-| Single- and multi-resource staffing | Configurable allocations and minimum staffing |
-| Multiple brand-process assignments | Supported through allocation records |
-| Employee pods | Pod labels and pod-based roster grouping |
-| Pod lead management | Not implemented as a separate entity |
-| Operating calendars | Daily, Monday–Saturday, and custom weekdays |
-| Weekly offs | Minimum weekly offs validation |
-| Leave and comp-offs | Employee-specific availability records |
-| Public holidays | Company-wide holiday configuration |
-| Roster generation | OR-Tools CP-SAT |
-| Coverage validation | Minimum primary staffing validation |
-| Conflict detection | Duplicate, double-booking, eligibility, availability, and work-limit checks |
-| Backup resources | Manager-approved backup suggestions |
-| Manual changes | Draft editing and locking |
-| Regeneration | Draft regeneration with locked entry preservation |
-| Roster views | Complete, brand, process, pod, and employee |
-| CSV/XLSX imports and exports | Supported |
-| Draft and publish workflow | Validation-controlled publishing |
-| Cloud database | Supabase PostgreSQL |
-| Backend hosting | Render |
-| Frontend hosting | Streamlit Community Cloud |
-
----
-
-## 18. Known Limitations and Future Improvements
+## 17. Known Limitations and Future Improvements
 
 The current implementation focuses on employee allocation, scheduling, validation, and manager-controlled roster publishing.
 
@@ -887,35 +853,7 @@ These are future enhancements rather than claims about existing functionality.
 
 ---
 
-## 19. Design Decisions
-
-### Why Python?
-
-Python was selected as the primary language because it supports the scheduling, data processing, API, and optimization requirements without introducing unnecessary language complexity.
-
-### Why Streamlit?
-
-Streamlit provides a straightforward way to build an interactive management interface using Python. It allows the focus to remain on the roster workflow and scheduling logic.
-
-### Why FastAPI?
-
-FastAPI separates backend operations from the frontend and provides structured request validation, REST endpoints, and interactive API documentation.
-
-### Why Supabase PostgreSQL?
-
-PostgreSQL provides relational data storage and supports the relationships between employees, allocations, coverage rules, and roster entries. Supabase provides managed hosting for the database.
-
-### Why Render?
-
-Render hosts the backend independently from the frontend, allowing the API to be deployed and maintained separately.
-
-### Why OR-Tools?
-
-OR-Tools CP-SAT provides a clear way to represent scheduling decisions and enforce hard constraints while optimizing workload distribution.
-
----
-
-## 20. Project Links
+## 18. Project Links
 
 | Resource | Link |
 |---|---|
@@ -933,7 +871,7 @@ OR-Tools CP-SAT provides a clear way to represent scheduling decisions and enfor
 
 ---
 
-## 21. Conclusion
+## 19. Conclusion
 
 The Smart Roster Management System brings employee administration, resource allocation, availability tracking, constraint-based scheduling, validation, and roster publishing into one application.
 
